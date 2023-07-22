@@ -7,23 +7,15 @@ import { ADD, DLT, REMOVE } from "../redux/actions/action";
 
 const CardsDetails = () => {
   const [data, setData] = useState([]);
-  // console.log(data);
+
   const { id } = useParams();
-  // console.log(id);
 
   const history = useNavigate();
 
   const dispatch = useDispatch();
 
   const getdata = useSelector((state) => state.cartreducer.carts);
-
-  const compare = () => {
-    let comparedata = getdata.filter((e) => {
-      return e.id == id;
-    });
-
-    setData(comparedata);
-  };
+  console.log(getdata);
 
   const send = (e) => {
     dispatch(ADD(e));
@@ -41,8 +33,15 @@ const CardsDetails = () => {
   };
 
   useEffect(() => {
+    const compare = () => {
+      let comparedata = getdata.filter((e) => {
+        return e.id === Number(id);
+      });
+
+      setData(comparedata);
+    };
     compare();
-  }, [id]);
+  }, [getdata, id]);
 
   return (
     <>

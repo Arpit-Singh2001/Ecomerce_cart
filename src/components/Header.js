@@ -31,18 +31,27 @@ const Header = () => {
     dispatch(DLT(id));
   };
 
-  const total = () => {
-    let price = 0;
-    getdata.map((ele, k) => {
-      return (price = Number(ele.price) * ele.qnty + price);
-    });
+  // const total = () => {
+  //   let price = 0;
+  //   getdata.map((ele, k) => {
+  //     return (price = Number(ele.price) * ele.qnty + price);
+  //   });
 
-    setPrice(price);
-  };
+  //   setPrice(price);
+  // };
 
   useEffect(() => {
+    const total = () => {
+      let price = 0;
+      getdata.map((ele, k) => {
+        return (price = Number(ele.price) * ele.qnty + price);
+      });
+
+      setPrice(price);
+    };
+
     total();
-  }, [total]);
+  }, [getdata]);
 
   return (
     <>
