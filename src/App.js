@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Cards from "./components/Cards";
 import CardsDetails from "./components/CardsDetails";
+import Details from "./components/Details";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Cards />} />
         <Route path="/cart/:id" element={<CardsDetails />} />
+        <Route path="/carts/:id" element={<Details />} />
       </Routes>
     </>
   );

@@ -12,3 +12,12 @@ export const DLT = (id) => {
     payload: id,
   };
 };
+
+//remove individual iteam
+
+export const REMOVE = (iteam) => {
+  return {
+    type: "RMV_ONE",
+    payload: iteam,
+  };
+};

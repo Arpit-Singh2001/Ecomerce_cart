@@ -3,11 +3,11 @@ import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { DLT } from "../redux/actions/action";
+import { ADD, DLT, REMOVE } from "../redux/actions/action";
 
 const CardsDetails = () => {
   const [data, setData] = useState([]);
-  console.log(data);
+  // console.log(data);
   const { id } = useParams();
   // console.log(id);
 
@@ -25,9 +25,19 @@ const CardsDetails = () => {
     setData(comparedata);
   };
 
+  const send = (e) => {
+    dispatch(ADD(e));
+  };
+
   const dlt = (id) => {
     dispatch(DLT(id));
     history("/");
+  };
+
+  //remove one
+
+  const remove = (item) => {
+    dispatch(REMOVE(item));
   };
 
   useEffect(() => {
@@ -37,15 +47,19 @@ const CardsDetails = () => {
   return (
     <>
       <div className="container mt-2">
-        <h2 className="text-center">Iteams Details Page </h2>
+        <h2 className="text-center">Checkout Details Page </h2>
 
         <section className="container mt-3">
           <div className="iteamsdetails">
-            {data.map((ele) => {
+            {data.map((ele, id) => {
               return (
                 <>
                   <div className="items_img">
-                    <img src={ele.imgdata} alt="img" />
+                    <img
+                      className="img-shadow p-3"
+                      src={ele.imgdata}
+                      alt="img"
+                    />
                   </div>
                   <div className="details">
                     <Table>
@@ -61,7 +75,7 @@ const CardsDetails = () => {
                             <strong>Dishes </strong> : {ele.address}
                           </p>
                           <p>
-                            <strong>Total</strong> : ₹ 300
+                            <strong>Total</strong> : ₹ {ele.price * ele.qnty}
                           </p>
 
                           <div
@@ -73,16 +87,31 @@ const CardsDetails = () => {
                               color: "#111",
                             }}
                           >
-                            <span style={{ fontSize: 24 }}>-</span>
+                            <span
+                              style={{ fontSize: 24 }}
+                              onClick={
+                                ele.qnty <= 1
+                                  ? () => dlt(ele.id)
+                                  : () => remove(ele)
+                              }
+                            >
+                              -
+                            </span>
                             <span style={{ fontSize: 22 }}>{ele.qnty}</span>
-                            <span style={{ fontSize: 24 }}>+</span>
+                            <span
+                              style={{ fontSize: 24 }}
+                              onClick={() => send(ele)}
+                            >
+                              +
+                            </span>
                           </div>
                         </td>
 
                         <td>
                           <p>
-                            <strong>Rating</strong> :{" "}
+                            <strong>Rating</strong> :
                             <span
+                              className="mx-2"
                               style={{
                                 background: "green",
                                 color: "#fff",
@@ -99,7 +128,7 @@ const CardsDetails = () => {
                           <p>
                             <strong>Remove</strong> :
                             <i
-                              className="fas fa-trash"
+                              className="fas fa-trash mx-2"
                               style={{
                                 color: "red ",
                                 fontSize: "20",
