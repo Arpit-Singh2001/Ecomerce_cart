@@ -11,8 +11,13 @@ export const cartreducer = (state = INIT_STATE, action) => {
 
       if (IteamIndex >= 0) {
         state.carts[IteamIndex].qnty += 1;
+        return {
+          ...state,
+          carts: [...state.carts],
+        };
       } else {
         const temp = { ...action.payload, qnty: 1 };
+
         return {
           ...state,
           carts: [...state.carts, temp],
@@ -21,10 +26,13 @@ export const cartreducer = (state = INIT_STATE, action) => {
 
     case "RMV_CART":
       const data = state.carts.filter((ele) => ele.id !== action.payload);
-      return {
-        ...state,
-        carts: data,
-      };
+      if (data) {
+        return {
+          ...state,
+          carts: data,
+        };
+      }
+      break;
 
     case "RMV_ONE":
       const IteamIndex_dec = state.carts.findIndex(
@@ -45,7 +53,7 @@ export const cartreducer = (state = INIT_STATE, action) => {
           carts: data,
         };
       }
-
+      break;
     default:
       return state;
   }
