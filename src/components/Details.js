@@ -8,15 +8,23 @@ const Details = () => {
 
   const { id } = useParams();
 
-  const compare = () => {
-    let comparedata = Cardsdata.filter((e) => {
-      return e.id == id;
-    });
+  // const compare = () => {
+  //   let comparedata = Cardsdata.filter((e) => {
+  //     return e.id === Number(id);
+  //   });
 
-    setData(comparedata);
-  };
+  //   setData(comparedata);
+  // };
 
   useEffect(() => {
+    const compare = () => {
+      let comparedata = Cardsdata.filter((e) => {
+        return e.id === Number(id);
+      });
+
+      setData(comparedata);
+    };
+
     compare();
   }, [id]);
 
